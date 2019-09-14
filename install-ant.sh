@@ -1,0 +1,46 @@
+#!/usr/bin/env sh
+set -e
+
+#
+# Installs the given Apache tool, verifying checksums and GPG signatures. Exits
+# non-zero on failure.
+#
+# Usage:
+#   install_ant.sh 1.10.7
+#
+# Requirements:
+#   - curl
+#   - gpg
+
+
+VERSION="$1"
+if [ -z "$VERSION" ]; then
+  echo "Missing VERSION"
+  exit
+fi
+
+DOWNLOAD_ROOT="https://www.apache.org/dist/ant"
+DOWNLOAD_BIN="apache-ant-${VERSION}-bin.zip"
+DOWNLOAD_SIG="apache-ant-${VERSION}-bin.zip.asc"
+
+echo "==> Installing ant v${VERSION}"
+
+echo "--> Importing keys"
+curl -sSL "${DOWNLOAD_ROOT}/KEYS" | gpg --import
+gpg --fingerprint | grep fingerprint | tr -d '[:blank:]' | awk 'BEGIN {FS="="} {print $2 ":6:"}' | gpg --import-ownertrust
+
+echo "--> Downloading ant v${VERSION}"
+curl -sfSO "${DOWNLOAD_ROOT}/binaries/${DOWNLOAD_BIN}"
+curl -sfSO "${DOWNLOAD_ROOT}/binaries/${DOWNLOAD_SIG}"
+
+echo "--> Verifying signatures file"
+gpg --batch --verify "${DOWNLOAD_SIG}" "${DOWNLOAD_BIN}"
+
+echo "--> Unpacking and installing"
+unzip -d "/software" "${DOWNLOAD_BIN}"
+
+echo "--> Removing temporary files"
+rm "${DOWNLOAD_BIN}"
+rm "${DOWNLOAD_SIG}"
+
+echo "--> Done!"
