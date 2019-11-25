@@ -6,7 +6,7 @@ set -e
 # non-zero on failure.
 #
 # Usage:
-#   install_ant.sh 1.10.7
+#   install-ant.sh 1.10.7
 #
 # Requirements:
 #   - curl

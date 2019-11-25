@@ -6,7 +6,7 @@ set -e
 # non-zero on failure.
 #
 # Usage:
-#   install_tomcat.sh 7.0.96
+#   install-tomcat.sh 7.0.96
 #
 # Requirements:
 #   - curl
