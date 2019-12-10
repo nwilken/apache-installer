@@ -20,8 +20,8 @@ if [ -z "$VERSION" ]; then
 fi
 
 DOWNLOAD_ROOT="https://www.apache.org/dist/ant"
-DOWNLOAD_BIN="apache-ant-${VERSION}-bin.zip"
-DOWNLOAD_SIG="apache-ant-${VERSION}-bin.zip.asc"
+DOWNLOAD_BIN="apache-ant-${VERSION}-bin.tar.gz"
+DOWNLOAD_SIG="apache-ant-${VERSION}-bin.tar.gz.asc"
 
 echo "==> Installing ant v${VERSION}"
 
@@ -37,7 +37,8 @@ echo "--> Verifying signatures file"
 gpg --batch --verify "${DOWNLOAD_SIG}" "${DOWNLOAD_BIN}"
 
 echo "--> Unpacking and installing"
-unzip -d "/software" "${DOWNLOAD_BIN}"
+mkdir -p /software
+tar xvfz "${DOWNLOAD_BIN}" --directory /software
 
 echo "--> Removing temporary files"
 rm "${DOWNLOAD_BIN}"

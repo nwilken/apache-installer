@@ -3,7 +3,7 @@ LABEL maintainer="Nate Wilken <wilken@asu.edu>"
 
 RUN set -x && \
     yum update -y && \
-    yum install -y unzip && \
+    yum install -y tar gzip && \
     yum clean all && \
     rm -rf /var/cache/yum /var/log/yum.log
 

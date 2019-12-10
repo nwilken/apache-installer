@@ -21,9 +21,15 @@ fi
 
 MAJOR_VERSION=$(echo $VERSION | awk 'BEGIN {FS="."} {print $1}')
 
-DOWNLOAD_ROOT="https://www.apache.org/dist/tomcat/tomcat-${MAJOR_VERSION}/v${VERSION}"
-DOWNLOAD_BIN="apache-tomcat-${VERSION}.zip"
-DOWNLOAD_SIG="apache-tomcat-${VERSION}.zip.asc"
+if [ "$MAJOR_VERSION" -gt 6 ]; then DOWNLOAD_HOST="www.apache.org"; else DOWNLOAD_HOST="archive.apache.org"; fi
+
+#
+# for v7 and above, use www.apache.org to force the latest version
+#
+DOWNLOAD_HOST=$([ "$MAJOR_VERSION" -ge 7 ] && echo "www.apache.org" || echo "archive.apache.org")
+DOWNLOAD_ROOT="https://${DOWNLOAD_HOST}/dist/tomcat/tomcat-${MAJOR_VERSION}/v${VERSION}"
+DOWNLOAD_BIN="apache-tomcat-${VERSION}.tar.gz"
+DOWNLOAD_SIG="apache-tomcat-${VERSION}.tar.gz.asc"
 
 echo "==> Installing tomcat v${VERSION}"
 
@@ -39,7 +45,8 @@ echo "--> Verifying signatures file"
 gpg --batch --verify "${DOWNLOAD_SIG}" "${DOWNLOAD_BIN}"
 
 echo "--> Unpacking and installing"
-unzip -d "/software" "${DOWNLOAD_BIN}"
+mkdir -p /software
+tar xvfz "${DOWNLOAD_BIN}" --directory /software
 
 echo "--> Removing temporary files"
 rm "${DOWNLOAD_BIN}"
