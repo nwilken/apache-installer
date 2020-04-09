@@ -19,7 +19,7 @@ if [ -z "$VERSION" ]; then
   exit
 fi
 
-DOWNLOAD_ROOT="https://www.apache.org/dist/ant"
+DOWNLOAD_ROOT="https://downloads.apache.org/ant"
 DOWNLOAD_BIN="apache-ant-${VERSION}-bin.tar.gz"
 DOWNLOAD_SIG="apache-ant-${VERSION}-bin.tar.gz.asc"
 
