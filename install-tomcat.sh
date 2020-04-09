@@ -26,8 +26,8 @@ if [ "$MAJOR_VERSION" -gt 6 ]; then DOWNLOAD_HOST="www.apache.org"; else DOWNLOA
 #
 # for v7 and above, use www.apache.org to force the latest version
 #
-DOWNLOAD_HOST=$([ "$MAJOR_VERSION" -ge 7 ] && echo "www.apache.org" || echo "archive.apache.org")
-DOWNLOAD_ROOT="https://${DOWNLOAD_HOST}/dist/tomcat/tomcat-${MAJOR_VERSION}/v${VERSION}"
+DOWNLOAD_URL_PREFIX=$([ "$MAJOR_VERSION" -ge 7 ] && echo "https://downloads.apache.org" || echo "https://archive.apache.org/dist")
+DOWNLOAD_ROOT="${DOWNLOAD_URL_PREFIX}/tomcat/tomcat-${MAJOR_VERSION}/v${VERSION}"
 DOWNLOAD_BIN="apache-tomcat-${VERSION}.tar.gz"
 DOWNLOAD_SIG="apache-tomcat-${VERSION}.tar.gz.asc"
 
