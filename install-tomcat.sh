@@ -21,12 +21,10 @@ fi
 
 MAJOR_VERSION=$(echo $VERSION | awk 'BEGIN {FS="."} {print $1}')
 
-if [ "$MAJOR_VERSION" -gt 6 ]; then DOWNLOAD_HOST="www.apache.org"; else DOWNLOAD_HOST="archive.apache.org"; fi
-
 #
-# for v7 and above, use www.apache.org to force the latest version
+# for v8 and above, use downloads.apache.org to force the latest version
 #
-DOWNLOAD_URL_PREFIX=$([ "$MAJOR_VERSION" -ge 7 ] && echo "https://downloads.apache.org" || echo "https://archive.apache.org/dist")
+DOWNLOAD_URL_PREFIX=$([ "$MAJOR_VERSION" -ge 8 ] && echo "https://downloads.apache.org" || echo "https://archive.apache.org/dist")
 DOWNLOAD_ROOT="${DOWNLOAD_URL_PREFIX}/tomcat/tomcat-${MAJOR_VERSION}/v${VERSION}"
 DOWNLOAD_BIN="apache-tomcat-${VERSION}.tar.gz"
 DOWNLOAD_SIG="apache-tomcat-${VERSION}.tar.gz.asc"
